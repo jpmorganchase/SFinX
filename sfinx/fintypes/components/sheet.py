@@ -30,7 +30,7 @@ class FinSheet:
         and stores them in self.unmerged_rows and self.unmerged_cols.
         :param sheet: A worksheet possibly including merged cells.
         """
-        for group in sheet.merged_cell_ranges:
+        for group in sheet.merged_cells.ranges:
             g = FinTabMergedCellGroup(sheet, group)
             sheet.unmerge_cells(str(group))
             row_indices, col_indices = g.get_indices(sheet)
