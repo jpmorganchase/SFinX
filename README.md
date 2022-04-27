@@ -16,4 +16,4 @@ The top segment of the table below provides two examples of such tabular data. T
 1. `git clone <SFinX>`
 2. `cd <SFinX>`
 3. `pip3 install -r requirements.txt`
-4. `python3 src/main.py --input /path/to/input/file.xlsx --input_extension xlsx --output /path/to/output --output_extension [json/tsv]`
+4. `python3 src/main.py --input /path/to/input/file.xlsx --input-extension xlsx --output /path/to/output --output-extension [json/tsv]`
