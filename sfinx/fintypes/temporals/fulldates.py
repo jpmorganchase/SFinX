@@ -1,4 +1,5 @@
 import dateparser
+
 from sfinx.fintypes.temporals.base import Temporal
 
 
@@ -6,6 +7,7 @@ class FullDate(Temporal):
     """
     Represents a full date expression.
     """
+
     def __init__(self):
         super().__init__(self.__name__)  # pylint: disable=no-member
 
@@ -17,5 +19,6 @@ class FullDate(Temporal):
         :return: full expression of date in text, if present (or None)
         """
         t = dateparser.parse(text)
-        if t: return t
+        if t:
+            return t
         return None

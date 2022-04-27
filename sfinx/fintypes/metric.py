@@ -1,4 +1,5 @@
 from collections import OrderedDict
+
 from sfinx.fintypes.attributes.amounts import FinTabAmount, FinTabDerivedAmount
 from sfinx.fintypes.attributes.currencies import FinTabCurrency
 from sfinx.fintypes.attributes.scales import FinTabScale
@@ -33,49 +34,60 @@ class FinTabMetric:
         """
         Provided with two amounts that correspond to the same period, calculates the raw delta over that period.
         """
-        derived_cell = FinTabDerivedAmount(amount2.amount - amount1.amount,
-                                           amount1.amount_type,
-                                           amount1.amount_scale,
-                                           amount1.amount_currency)
+        derived_cell = FinTabDerivedAmount(
+            amount2.amount - amount1.amount,
+            amount1.amount_type,
+            amount1.amount_scale,
+            amount1.amount_currency,
+        )
         self.period_to_amount[period] = derived_cell
 
     def set_pct_delta(self, amount1, period1, amount2, period2):
         """
         Provided with two amounts over two periods, calculates the period-on-period change%.
         """
-        derived_period = FinTabDerivedPeriod(period1.expr + ' to ' + period2.expr + ' delta% [derived]',
-                                             period1.start_date, period2.end_date,
-                                             period1.flags + period2.flags,
-                                             period1.occurrence_range + period2.occurrence_range)
-        derived_cell = FinTabDerivedAmount(((amount2.amount - amount1.amount) * 100.0 / amount1.amount)
-                                           if amount1.amount != 0.0 else 0.0,
-                                           FinTabValTypes.PERCENT,
-                                           FinTabScale.DEFAULT,
-                                           FinTabCurrency.DEFAULT)
+        derived_period = FinTabDerivedPeriod(
+            period1.expr + " to " + period2.expr + " delta% [derived]",
+            period1.start_date,
+            period2.end_date,
+            period1.flags + period2.flags,
+            period1.occurrence_range + period2.occurrence_range,
+        )
+        derived_cell = FinTabDerivedAmount(
+            ((amount2.amount - amount1.amount) * 100.0 / amount1.amount) if amount1.amount != 0.0 else 0.0,
+            FinTabValTypes.PERCENT,
+            FinTabScale.DEFAULT,
+            FinTabCurrency.DEFAULT,
+        )
         self.period_to_amount[derived_period] = derived_cell
 
     def set_bps_delta(self, amount1, period1, amount2, period2):
         """
         Provided with two amounts over two periods, calculates the period-on-period change in basis-points.
         """
-        derived_period = FinTabDerivedPeriod(period1.expr + ' to ' + period2.expr + ' delta(BPS) [derived]',
-                                             period1.start_date, period2.end_date,
-                                             period1.flags + period2.flags,
-                                             period1.occurrence_range + period2.occurrence_range)
-        derived_cell = FinTabDerivedAmount(int((amount2.amount - amount1.amount) * 10000 / amount1.amount)
-                                           if amount1.amount != 0.0 else 0,
-                                           FinTabValTypes.BPS,
-                                           FinTabScale.DEFAULT,
-                                           FinTabCurrency.DEFAULT)
+        derived_period = FinTabDerivedPeriod(
+            period1.expr + " to " + period2.expr + " delta(BPS) [derived]",
+            period1.start_date,
+            period2.end_date,
+            period1.flags + period2.flags,
+            period1.occurrence_range + period2.occurrence_range,
+        )
+        derived_cell = FinTabDerivedAmount(
+            int((amount2.amount - amount1.amount) * 10000 / amount1.amount) if amount1.amount != 0.0 else 0,
+            FinTabValTypes.BPS,
+            FinTabScale.DEFAULT,
+            FinTabCurrency.DEFAULT,
+        )
         self.period_to_amount[derived_period] = derived_cell
 
     def set_change_rates(self):
         items = [(period, amount) for period, amount in self.period_to_amount.items()]
-        item_pairs = [(items[i], items[i+1]) for i in range(0, len(items)-1)]
+        item_pairs = [(items[i], items[i + 1]) for i in range(0, len(items) - 1)]
         for (period1, amount1), (period2, amount2) in item_pairs:
             # For any pair of adjacent cells, calculate period-on-period deltas, if appropriate.
             derived_period = FinTabDerivedPeriod.calculate(amount1, period1, amount2, period2)
-            if derived_period is None: continue
+            if derived_period is None:
+                continue
             # Set the raw delta
             self.set_delta(amount1, amount2, derived_period)
             # Set the percentage change
@@ -94,22 +106,28 @@ class FinTabMetric:
         period_amount_type_to_amount = {}
         for smn, sm in self.name_to_sub_metric.items():
             # purge any totals from each group
-            if 'total' in smn.lower(): continue
+            if "total" in smn.lower():
+                continue
             for period, amount in sm.period_to_amount.items():
                 # skip over derived periods
-                if '[derived]' in period.expr: continue
+                if "[derived]" in period.expr:
+                    continue
                 # skip over percentages--they already reflect shares
-                if amount.amount_type == FinTabValTypes.PERCENT: continue
+                if amount.amount_type == FinTabValTypes.PERCENT:
+                    continue
                 # get the proper amount type (integers and floats are treated the same as currencies)
-                if amount.fit_for_deltas(): at = FinTabValTypes.CURRENCY
-                else: at = amount.amount_type
+                if amount.fit_for_deltas():
+                    at = FinTabValTypes.CURRENCY
+                else:
+                    at = amount.amount_type
                 # populate the map that tracks periods, amount types and amounts
                 l = period_amount_type_to_amount.get((period, at), [])
                 l.append(amount)
                 period_amount_type_to_amount[(period, amount.amount_type)] = l
         # next, calculate totals
         for key, l in period_amount_type_to_amount.items():
-            if len(l) == 0: continue
+            if len(l) == 0:
+                continue
             total = sum([x.amount for x in l])
             for x in l:
                 # then, calculate the share for each metric and add it as derived data
@@ -123,13 +141,13 @@ class FinTabMetric:
         """
         Returns json representation of self.
         """
-        j = {'metric_name': self.name}
+        j = {"metric_name": self.name}
         if len(self.period_to_amount) > 0:
-            j['values'] = []
+            j["values"] = []
             for period, amount in self.period_to_amount.items():
-                j['values'].append({'period': period.to_json(), 'amount': amount.to_json()})
+                j["values"].append({"period": period.to_json(), "amount": amount.to_json()})
         if len(self.name_to_sub_metric) > 0:
-            j['sub_metrics'] = []
+            j["sub_metrics"] = []
             for smn, sm in self.name_to_sub_metric.items():
-                j['sub_metrics'].append(sm.to_json())
+                j["sub_metrics"].append(sm.to_json())
         return j

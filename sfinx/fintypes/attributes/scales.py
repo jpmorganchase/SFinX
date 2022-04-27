@@ -1,4 +1,5 @@
 import re
+
 from sfinx.fintypes.attributes.valtypes import FinTabValTypes
 
 
@@ -6,14 +7,16 @@ class FinTabScale:
     """
     Represents the scale of a number mentioned in a table cell.
     """
-    DEFAULT = 'default'
+
+    DEFAULT = "default"
 
     def __init__(self, name, regex):
         self.name = name
         self.regex = re.compile(regex)
 
     def match(self, text):
-        if self.regex.search(text): return self.name
+        if self.regex.search(text):
+            return self.name
         return self.DEFAULT
 
     @staticmethod
@@ -23,9 +26,10 @@ class FinTabScale:
         :param cell: A table cell
         :return: The name of an object of the FinTabScale class.
         """
-        if cell.val_type == FinTabValTypes.PERCENT: return FinTabScale.DEFAULT
+        if cell.val_type == FinTabValTypes.PERCENT:
+            return FinTabScale.DEFAULT
         scales = [Millions(), Billions(), Thousands()]
-        h = ' '.join([m.val for m in cell.metrics_hierarchy]).lower()
+        h = " ".join([m.val for m in cell.metrics_hierarchy]).lower()
         for scale in scales:
             if scale.match(h) != FinTabScale.DEFAULT:
                 return scale.name

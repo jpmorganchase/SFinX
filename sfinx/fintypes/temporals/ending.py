@@ -1,5 +1,7 @@
 import re
+
 from dateutil.relativedelta import relativedelta
+
 from sfinx.fintypes.temporals.base import Temporal
 
 
@@ -7,21 +9,23 @@ class Ending(Temporal):
     """
     Represents a period expression such as "3 months ending Sep 30, 2020".
     """
+
     MONTHS = "months"
     DAYS = "days"
-    NUM_MAP = {'one': 1,
-               'two': 2,
-               'three': 3,
-               'four': 4,
-               'five': 5,
-               'six': 6,
-               'seven': 7,
-               'eight': 8,
-               'nine': 9,
-               'ten': 10,
-               'eleven': 11,
-               'twelve': 12
-            }
+    NUM_MAP = {
+        "one": 1,
+        "two": 2,
+        "three": 3,
+        "four": 4,
+        "five": 5,
+        "six": 6,
+        "seven": 7,
+        "eight": 8,
+        "nine": 9,
+        "ten": 10,
+        "eleven": 11,
+        "twelve": 12,
+    }
 
     def __init__(self, name):
         super().__init__(name)
@@ -34,16 +38,20 @@ class Ending(Temporal):
         """
         for regex in self.regexes:
             hit = regex.search(text)
-            if not hit: continue
+            if not hit:
+                continue
             i, j = hit.span()
             span = text[i:j]
             count = None
             for num, dig in self.NUM_MAP.items():
                 if span.startswith(num):
                     count = dig
-            if count is None: count = int(''.join([c for c in span if c.isdigit()]))
-            if self.name == self.MONTHS: return relativedelta(months=-1 * count)
-            if self.name == self.DAYS: return relativedelta(days=-1 * count)
+            if count is None:
+                count = int("".join([c for c in span if c.isdigit()]))
+            if self.name == self.MONTHS:
+                return relativedelta(months=-1 * count)
+            if self.name == self.DAYS:
+                return relativedelta(days=-1 * count)
         return None
 
     @staticmethod
@@ -55,11 +63,13 @@ class Ending(Temporal):
         :return: the period expression, normalized as a relativedelta object
         """
         ss = re.split(r"\b(ended|ending)\s?(in|on|at|by)?\b", text)
-        if len(ss) <= 1: return None
-        expr = ' '.join([x for x in ss[:-1] if x])
+        if len(ss) <= 1:
+            return None
+        expr = " ".join([x for x in ss[:-1] if x])
         for period in ending_periods:
             idx = period.get(expr)
-            if idx: return idx
+            if idx:
+                return idx
         return None
 
 
@@ -67,7 +77,7 @@ class MonthsEnding(Ending):
     def __init__(self):
         super().__init__(Ending.MONTHS)
         self.add_regex(r"[0-9]+\s?(months|mos|mo\.s)")
-        self.add_regex("(" + '|'.join([num for num in self.NUM_MAP.keys()]) + r")\s?(months|mos|mo\.s)")
+        self.add_regex("(" + "|".join([num for num in self.NUM_MAP.keys()]) + r")\s?(months|mos|mo\.s)")
 
 
 class DaysEnding(Ending):

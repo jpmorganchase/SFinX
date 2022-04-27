@@ -1,4 +1,4 @@
-from sfinx.fintypes.temporals.ending import MonthsEnding, DaysEnding
+from sfinx.fintypes.temporals.ending import DaysEnding, MonthsEnding
 
 
 def test_months_ending():

@@ -1,6 +1,5 @@
-from tests.globals import sample_table
 from sfinx.fintypes.components.cell import FinTabCell
-
+from tests.globals import sample_table
 
 cell1 = FinTabCell(1, 3, sample_table["B4"], [])
 cell2 = FinTabCell(3, 3, sample_table["D4"], [])

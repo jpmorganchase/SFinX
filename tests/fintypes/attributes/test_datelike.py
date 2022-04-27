@@ -1,5 +1,5 @@
-from tests.globals import sample_cell, sample_cell_i, sample_cell_j, sample_table
 from sfinx.fintypes.attributes.datelike import Datelike
+from tests.globals import sample_cell, sample_cell_i, sample_cell_j, sample_table
 
 
 def test_datelike():

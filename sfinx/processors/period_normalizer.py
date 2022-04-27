@@ -11,7 +11,6 @@ class FinTabPeriodNormalizer:
         for sheet_name, sheet in self.wb.sheets.items():
             for coords, cell in sheet.cells.items():
                 if not cell.is_empty:
-                    period, hierarchy = \
-                        FinTabPeriod.get_period(self.header_to_period_map, sheet_name, cell)
+                    period, hierarchy = FinTabPeriod.get_period(self.header_to_period_map, sheet_name, cell)
                     cell.period = period
                     cell.metrics_hierarchy = hierarchy

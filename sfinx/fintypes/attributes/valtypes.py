@@ -1,19 +1,21 @@
-from openpyxl.styles import numbers
 from datetime import datetime
+
+from openpyxl.styles import numbers
 
 
 class FinTabValTypes:
     """
     Represents the type of values in a financial table cell.
     """
-    DEFAULT = 'default'
-    TEXT = 'text'
-    INT = 'int'
-    CURRENCY = 'currency'
-    PERCENT = 'percent'
-    BPS = 'bps'
-    DATE = 'date'
-    FLOAT = 'float'
+
+    DEFAULT = "default"
+    TEXT = "text"
+    INT = "int"
+    CURRENCY = "currency"
+    PERCENT = "percent"
+    BPS = "bps"
+    DATE = "date"
+    FLOAT = "float"
 
     FORMAT_MAP = {
         numbers.FORMAT_NUMBER: INT,
@@ -47,7 +49,7 @@ class FinTabValTypes:
         numbers.FORMAT_DATE_YYMMDDSLASH: DATE,
         numbers.FORMAT_CURRENCY_USD_SIMPLE: CURRENCY,
         numbers.FORMAT_CURRENCY_USD: CURRENCY,
-        numbers.FORMAT_CURRENCY_EUR_SIMPLE: CURRENCY
+        numbers.FORMAT_CURRENCY_EUR_SIMPLE: CURRENCY,
     }
 
     @staticmethod
@@ -59,11 +61,18 @@ class FinTabValTypes:
         """
         if cell.number_format and cell.number_format in FinTabValTypes.FORMAT_MAP:
             return FinTabValTypes.FORMAT_MAP[cell.number_format]
-        if cell.number_format and '%' in cell.number_format: return FinTabValTypes.PERCENT
-        if cell.number_format and '$' in cell.number_format: return FinTabValTypes.CURRENCY
-        if cell.number_format and '\\(#' in cell.number_format: return FinTabValTypes.CURRENCY
-        if isinstance(cell.value, str) and len(cell.value.strip()) > 0: return FinTabValTypes.TEXT
-        if isinstance(cell.value, datetime): return FinTabValTypes.DATE
-        if isinstance(cell.value, int): return FinTabValTypes.INT
-        if isinstance(cell.value, float): return FinTabValTypes.FLOAT
+        if cell.number_format and "%" in cell.number_format:
+            return FinTabValTypes.PERCENT
+        if cell.number_format and "$" in cell.number_format:
+            return FinTabValTypes.CURRENCY
+        if cell.number_format and "\\(#" in cell.number_format:
+            return FinTabValTypes.CURRENCY
+        if isinstance(cell.value, str) and len(cell.value.strip()) > 0:
+            return FinTabValTypes.TEXT
+        if isinstance(cell.value, datetime):
+            return FinTabValTypes.DATE
+        if isinstance(cell.value, int):
+            return FinTabValTypes.INT
+        if isinstance(cell.value, float):
+            return FinTabValTypes.FLOAT
         return FinTabValTypes.DEFAULT

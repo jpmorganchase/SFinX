@@ -5,6 +5,7 @@ class Month(Temporal):
     """
     Represents one of the  twelve months in the year.
     """
+
     def __init__(self, name, index):
         super().__init__(name)
         self.index = index
@@ -17,7 +18,8 @@ class Month(Temporal):
         """
         for regex in self.regexes:
             hit = regex.search(text)
-            if hit: return self.index
+            if hit:
+                return self.index
         return None
 
     @staticmethod
@@ -30,7 +32,8 @@ class Month(Temporal):
         """
         for month in months:
             idx = month.get(text)
-            if idx: return idx
+            if idx:
+                return idx
         return None
 
 

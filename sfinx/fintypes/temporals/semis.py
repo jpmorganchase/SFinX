@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from sfinx.fintypes.temporals.base import Temporal
 
 
@@ -6,6 +7,7 @@ class Semi(Temporal):
     """
     Represents one of semi-annual periods.
     """
+
     def __init__(self, name, index):
         super().__init__(name)
         self.index = index
@@ -18,7 +20,8 @@ class Semi(Temporal):
         """
         for regex in self.regexes:
             hit = regex.search(text)
-            if hit: return self.index
+            if hit:
+                return self.index
         return None
 
     @staticmethod
@@ -31,7 +34,8 @@ class Semi(Temporal):
         """
         for semi in semis:
             idx = semi.get(text)
-            if idx: return idx
+            if idx:
+                return idx
         return None
 
     @staticmethod
@@ -43,8 +47,10 @@ class Semi(Temporal):
         :return: A tuple representing the start and end dates on the calendar
         """
         # FIXME: needs to accommodate year end pair
-        if half == 2: return datetime(year, 7, 1), datetime(year+1, 1, 1)
-        if half == 1: return datetime(year, 1, 1), datetime(year, 7, 1)
+        if half == 2:
+            return datetime(year, 7, 1), datetime(year + 1, 1, 1)
+        if half == 1:
+            return datetime(year, 1, 1), datetime(year, 7, 1)
         return None, None
 
 

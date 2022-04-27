@@ -6,15 +6,22 @@ class FinSheet:
     """
     Represents a worksheet with one or more financial tables.
     """
+
     def __init__(self, sheet_name, sheet):
         # main members
         self.sheet_name = sheet_name
         self.nrows = sheet.max_row
         self.ncols = sheet.max_column
         self.cells = {}  # map of coordinates (i, j) to cell object
-        self.empty_rows = set()  # Ordered list of row indices that are empty. This is helpful for identifying table boundaries
-        self.empty_cols = set()  # Ordered list of column indices that are empty. This is helpful for identifying table boundaries.
-        self.tables = []  # list of tables within the current sheet (note that one worksheet may include more than one table)
+        self.empty_rows = (
+            set()
+        )  # Ordered list of row indices that are empty. This is helpful for identifying table boundaries
+        self.empty_cols = (
+            set()
+        )  # Ordered list of column indices that are empty. This is helpful for identifying table boundaries.
+        self.tables = (
+            []
+        )  # list of tables within the current sheet (note that one worksheet may include more than one table)
         # helper properties
         self.unmerged_cols = set()  # keeps track of column-wise merged cells
         self.unmerged_rows = set()  # keeps track of row-wise merged cells
@@ -92,11 +99,13 @@ class FinSheet:
         """
         # Find the closest upward cell that is non-empty
         k = i - 1
-        while k-1 not in self.empty_rows and (k, j) in self.cells and self.cells[(k, j)].is_empty: k -= 1
+        while k - 1 not in self.empty_rows and (k, j) in self.cells and self.cells[(k, j)].is_empty:
+            k -= 1
         # This top neighbor is either a header, or a cell with the same col header as the current cell.
         if (k, j) in self.cells:
             top_neighbor = self.cells[(k, j)]
-            if top_neighbor.is_body and top_neighbor.col_header: return top_neighbor.col_header
+            if top_neighbor.is_body and top_neighbor.col_header:
+                return top_neighbor.col_header
             if top_neighbor.is_header:
                 output = []
                 while top_neighbor is not None and top_neighbor.is_header:
@@ -116,11 +125,13 @@ class FinSheet:
         """
         # Find the closest leftward cell that is non-empty
         k = j - 1
-        while k-1 not in self.empty_cols and (i, k) in self.cells and self.cells[(i, k)].is_empty: k -= 1
+        while k - 1 not in self.empty_cols and (i, k) in self.cells and self.cells[(i, k)].is_empty:
+            k -= 1
         # This left neighbor is either a header, or a cell with the same row header as the current cell.
         if (i, k) in self.cells:
             left_neighbor = self.cells[(i, k)]
-            if left_neighbor.is_body and left_neighbor.row_header: return left_neighbor.row_header
+            if left_neighbor.is_body and left_neighbor.row_header:
+                return left_neighbor.row_header
             if left_neighbor.is_header:
                 output = []
                 while left_neighbor is not None and left_neighbor.is_header:
@@ -142,8 +153,10 @@ class FinSheet:
         """
         curr = self.cells[(i, j)]
         nxt = self.cells.get((i + 1, j), None)
-        if not nxt: return False
-        if not nxt.is_header: return False
+        if not nxt:
+            return False
+        if not nxt.is_header:
+            return False
         if nxt.sub(curr):
             nxt.inherited_header = curr.inherited_header + nxt.inherited_header
             return True
@@ -163,8 +176,10 @@ class FinSheet:
         """
         curr = self.cells[(i, j)]
         nxt = self.cells.get((i, j + 1), None)
-        if not nxt: return False
-        if not nxt.is_header: return False
+        if not nxt:
+            return False
+        if not nxt.is_header:
+            return False
         if nxt.sub(curr):
             nxt.inherited_header = curr.inherited_header + nxt.inherited_header
             return True

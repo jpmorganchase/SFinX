@@ -1,7 +1,7 @@
-from sfinx.fintypes.temporals.base import Temporal
-from sfinx.fintypes.period import FinTabPeriod
-from sfinx.fintypes.components.cell import FinTabHeader
 from sfinx.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.components.cell import FinTabHeader
+from sfinx.fintypes.period import FinTabPeriod
+from sfinx.fintypes.temporals.base import Temporal
 
 
 def test_temporal_expr():

@@ -1,4 +1,5 @@
 import re
+
 from sfinx.fintypes.attributes.colors import FinTabColors
 from sfinx.fintypes.attributes.styles import FinTabStyles
 from sfinx.fintypes.attributes.valtypes import FinTabValTypes
@@ -8,6 +9,7 @@ class FinTabCell:
     """
     Represents a cell in a financial table.
     """
+
     FOOTNOTE_FLAG_REGEX = re.compile(r"(\*+|[(\[][a-z1-9]+[])])$")
 
     def __init__(self, i, j, cell, flags):
@@ -29,8 +31,10 @@ class FinTabCell:
                 pass
             except TypeError:
                 pass
-        if self.val_type in [FinTabValTypes.CURRENCY, FinTabValTypes.FLOAT] and str(self.val).strip() == '-': self.val = 0.0
-        if self.val_type in [FinTabValTypes.INT] and str(self.val).strip() == '-': self.val = 0
+        if self.val_type in [FinTabValTypes.CURRENCY, FinTabValTypes.FLOAT] and str(self.val).strip() == "-":
+            self.val = 0.0
+        if self.val_type in [FinTabValTypes.INT] and str(self.val).strip() == "-":
+            self.val = 0
         self.number_format = cell.number_format
         self.val_str = self._convert_to_str()
         try:
@@ -42,12 +46,25 @@ class FinTabCell:
         self.font_is_italic = cell.font.i if cell.font.i else False
         self.font_color = FinTabColors.get_cell_font_color_hex(cell)[2:]
         self.bg_color = FinTabColors.get_cell_fill_color_hex(cell)
-        self.horizontal_alignment = cell.alignment.horizontal if cell.alignment else FinTabStyles.HORIZONTAL_ALIGNMENT_LEFT
+        self.horizontal_alignment = (
+            cell.alignment.horizontal if cell.alignment else FinTabStyles.HORIZONTAL_ALIGNMENT_LEFT
+        )
         self.col_header = None
         self.row_header = None
-        self.inherited_header = [
-            FinTabHeader(self.i, self.j, self.val, self.val_type, self.number_format, self.flags)] if \
-            self.is_header else []
+        self.inherited_header = (
+            [
+                FinTabHeader(
+                    self.i,
+                    self.j,
+                    self.val,
+                    self.val_type,
+                    self.number_format,
+                    self.flags,
+                )
+            ]
+            if self.is_header
+            else []
+        )
         self.period = None
         self.metrics_hierarchy = []
 
@@ -55,34 +72,52 @@ class FinTabCell:
         """
         Returns the string representation of the cell value.
         """
-        if self.val is None: return ''
-        if self.val_type in [FinTabValTypes.TEXT, FinTabValTypes.PERCENT, FinTabValTypes.CURRENCY]: return self.val
-        if self.val_type == FinTabValTypes.DATE: return self.val.strftime('%Y-%m-%d')
-        if self.val_type == FinTabValTypes.FLOAT: return "{:,.2f}".format(self.val)
+        if self.val is None:
+            return ""
+        if self.val_type in [
+            FinTabValTypes.TEXT,
+            FinTabValTypes.PERCENT,
+            FinTabValTypes.CURRENCY,
+        ]:
+            return self.val
+        if self.val_type == FinTabValTypes.DATE:
+            return self.val.strftime("%Y-%m-%d")
+        if self.val_type == FinTabValTypes.FLOAT:
+            return "{:,.2f}".format(self.val)
         return str(self.val)
 
     def sub(self, other):
         """
         Determines whether self is a subordinate cell to other.
         """
-        if not isinstance(other, FinTabCell): return False
-        if self.style == FinTabStyles.NORMAL and other.style != FinTabStyles.NORMAL: return True
-        if self.equal(other) and self.font_color > other.font_color: return True
+        if not isinstance(other, FinTabCell):
+            return False
+        if self.style == FinTabStyles.NORMAL and other.style != FinTabStyles.NORMAL:
+            return True
+        if self.equal(other) and self.font_color > other.font_color:
+            return True
 
-        return self.font_size < other.font_size or \
-               (not self.font_is_bold and other.font_is_bold) or \
-               (not self.font_is_italic and other.font_is_italic) or \
-               (self.horizontal_alignment == FinTabStyles.HORIZONTAL_ALIGNMENT_LEFT and
-                other.horizontal_alignment == FinTabStyles.HORIZONTAL_ALIGNMENT_CENTER)
+        return (
+            self.font_size < other.font_size
+            or (not self.font_is_bold and other.font_is_bold)
+            or (not self.font_is_italic and other.font_is_italic)
+            or (
+                self.horizontal_alignment == FinTabStyles.HORIZONTAL_ALIGNMENT_LEFT
+                and other.horizontal_alignment == FinTabStyles.HORIZONTAL_ALIGNMENT_CENTER
+            )
+        )
 
     def equal(self, other):
         """
         Determines whether self is equal in the hierarchy of cells to other.
         """
-        if not isinstance(other, FinTabCell): return False
-        return self.font_size == other.font_size and \
-               self.font_is_bold == other.font_is_bold and \
-               self.font_is_italic == other.font_is_italic
+        if not isinstance(other, FinTabCell):
+            return False
+        return (
+            self.font_size == other.font_size
+            and self.font_is_bold == other.font_is_bold
+            and self.font_is_italic == other.font_is_italic
+        )
 
     @property
     def is_empty(self):
@@ -96,8 +131,11 @@ class FinTabCell:
         """
         Determines whether self is a body cell (as opposed to a header cell).
         """
-        return not self.is_empty and \
-               self.val_type not in [FinTabValTypes.TEXT, FinTabValTypes.DATE, FinTabValTypes.DEFAULT]
+        return not self.is_empty and self.val_type not in [
+            FinTabValTypes.TEXT,
+            FinTabValTypes.DATE,
+            FinTabValTypes.DEFAULT,
+        ]
 
     @property
     def is_header(self):
@@ -114,14 +152,14 @@ class FinTabCell:
         :return: A tuple containing the raw cell value as well as flags indicating possible footnotes
         """
         footnote_flag = []
-        if cell.value and cell.data_type in ['s', 'n']:
+        if cell.value and cell.data_type in ["s", "n"]:
             s = str(cell.value)
             hit = FinTabCell.FOOTNOTE_FLAG_REGEX.search(s.lower())
             if hit:
                 a, b = hit.span()
                 footnote_flag.append(s[a:b])
-                cell.value = cell.value[0:a]+cell.value[b:]
-                if '.' not in s:
+                cell.value = cell.value[0:a] + cell.value[b:]
+                if "." not in s:
                     try:
                         cell.value = int(cell.value)
                     except ValueError:
@@ -138,6 +176,7 @@ class FinTabHeader:
     """
     Represents a header cell.
     """
+
     def __init__(self, i, j, val, val_type, number_format, flags):
         self.i = i
         self.j = j
@@ -148,13 +187,14 @@ class FinTabHeader:
 
     @property
     def key(self):
-        return self.val + ',' + str(self.i) + ',' + str(self.j)
+        return self.val + "," + str(self.i) + "," + str(self.j)
 
 
 class FinTabMergedCellGroup:
     """
     Represents a group of merged cells in a financial table.
     """
+
     def __init__(self, sheet, group):
         self.group = group  # The group of merged cells
         self.top_left_cell_value = sheet.cell(row=group.min_row, column=group.min_col).value  # top-left coords
@@ -170,13 +210,19 @@ class FinTabMergedCellGroup:
         :return: Set of row-wise and column-wise indices of the merge group within the worksheet.
         """
         i = -1
-        for row in sheet.iter_rows(min_col=self.group.min_col, min_row=self.group.min_row, max_col=self.group.max_col,
-                                   max_row=self.group.max_row):
+        for row in sheet.iter_rows(
+            min_col=self.group.min_col,
+            min_row=self.group.min_row,
+            max_col=self.group.max_col,
+            max_row=self.group.max_row,
+        ):
             i += 1
             j = -1
             for cell in row:
                 j += 1
                 cell.value = self.top_left_cell_value
-                if self.row_wise: self.row_indices.add((i, j))
-                if self.col_wise: self.col_indices.add((i, j))
+                if self.row_wise:
+                    self.row_indices.add((i, j))
+                if self.col_wise:
+                    self.col_indices.add((i, j))
         return self.row_indices, self.col_indices
