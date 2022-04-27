@@ -1,5 +1,5 @@
 from tests.globals import sample_toc
-from src.fintypes.attributes.colors import FinTabColors
+from sfinx.fintypes.attributes.colors import FinTabColors
 
 
 def test_cell_font_color_hex():

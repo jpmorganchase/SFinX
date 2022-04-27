@@ -1,9 +1,9 @@
 import os
 from openpyxl import load_workbook
-from src.fintypes.components.workbook import FinWorkbook
-from src.fintypes.components.cell import FinTabCell
-from src.processors.period_normalizer import FinTabPeriodNormalizer
-from src.processors.metric_normalizer import FinTabMetricNormalizer
+from sfinx.fintypes.components.workbook import FinWorkbook
+from sfinx.fintypes.components.cell import FinTabCell
+from sfinx.processors.period_normalizer import FinTabPeriodNormalizer
+from sfinx.processors.metric_normalizer import FinTabMetricNormalizer
 
 sample_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "samples", "sample1.xlsx")
 sample_workbook = load_workbook(sample_path)

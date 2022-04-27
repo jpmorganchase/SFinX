@@ -1,5 +1,5 @@
-from src.fintypes.attributes.datelike import Datelike
-from src.fintypes.components.cell import FinTabCell, FinTabMergedCellGroup
+from sfinx.fintypes.attributes.datelike import Datelike
+from sfinx.fintypes.components.cell import FinTabCell, FinTabMergedCellGroup
 
 
 class FinSheet:

@@ -1,5 +1,5 @@
 from tests.globals import sample_table
-from src.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.attributes.valtypes import FinTabValTypes
 
 
 def test_cell_type():

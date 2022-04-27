@@ -1,4 +1,4 @@
-from src.fintypes.temporals.semis import *
+from sfinx.fintypes.temporals.semis import *
 
 
 def test_semis():

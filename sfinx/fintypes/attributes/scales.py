@@ -1,5 +1,5 @@
 import re
-from src.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.attributes.valtypes import FinTabValTypes
 
 
 class FinTabScale:

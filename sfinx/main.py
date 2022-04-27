@@ -2,9 +2,9 @@ import os
 import sys
 import argparse
 import json
-from src.fintypes.components.workbook import FinWorkbook
-from src.processors.period_normalizer import FinTabPeriodNormalizer
-from src.processors.metric_normalizer import FinTabMetricNormalizer
+from sfinx.fintypes.components.workbook import FinWorkbook
+from sfinx.processors.period_normalizer import FinTabPeriodNormalizer
+from sfinx.processors.metric_normalizer import FinTabMetricNormalizer
 
 INPUT_EXTENSIONS = ['xlsx', 'csv', 'tsv', 'txt', 'html', 'htm']
 OUTPUT_EXTENSIONS = ['tsv', 'json']

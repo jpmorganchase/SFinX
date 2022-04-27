@@ -1,5 +1,5 @@
 from tests.globals import sample_fin_table
-from src.fintypes.period import FinTabPeriod
+from sfinx.fintypes.period import FinTabPeriod
 
 
 def test_period():

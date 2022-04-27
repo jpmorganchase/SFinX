@@ -1,4 +1,4 @@
-from src.fintypes.temporals.years import *
+from sfinx.fintypes.temporals.years import *
 
 
 def test_years():

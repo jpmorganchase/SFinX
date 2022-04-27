@@ -1,9 +1,9 @@
 from collections import OrderedDict
-from src.fintypes.attributes.amounts import FinTabAmount, FinTabDerivedAmount
-from src.fintypes.attributes.currencies import FinTabCurrency
-from src.fintypes.attributes.scales import FinTabScale
-from src.fintypes.attributes.valtypes import FinTabValTypes
-from src.fintypes.period import FinTabDerivedPeriod
+from sfinx.fintypes.attributes.amounts import FinTabAmount, FinTabDerivedAmount
+from sfinx.fintypes.attributes.currencies import FinTabCurrency
+from sfinx.fintypes.attributes.scales import FinTabScale
+from sfinx.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.period import FinTabDerivedPeriod
 
 
 class FinTabMetric:

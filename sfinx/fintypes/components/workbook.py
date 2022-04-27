@@ -1,6 +1,6 @@
 from io import BytesIO
 from openpyxl import load_workbook
-from src.fintypes.components.sheet import FinSheet
+from sfinx.fintypes.components.sheet import FinSheet
 
 
 class FinWorkbook:

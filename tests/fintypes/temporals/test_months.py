@@ -1,4 +1,4 @@
-from src.fintypes.temporals.months import *
+from sfinx.fintypes.temporals.months import *
 
 
 def test_months():

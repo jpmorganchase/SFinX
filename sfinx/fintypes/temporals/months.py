@@ -1,4 +1,4 @@
-from src.fintypes.temporals.base import Temporal
+from sfinx.fintypes.temporals.base import Temporal
 
 
 class Month(Temporal):

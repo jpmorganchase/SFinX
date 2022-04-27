@@ -1,6 +1,6 @@
-from src.fintypes.attributes.currencies import FinTabCurrency
-from src.fintypes.attributes.scales import FinTabScale
-from src.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.attributes.currencies import FinTabCurrency
+from sfinx.fintypes.attributes.scales import FinTabScale
+from sfinx.fintypes.attributes.valtypes import FinTabValTypes
 
 
 class FinTabAmount:

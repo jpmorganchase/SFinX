@@ -1,4 +1,4 @@
-from src.fintypes.temporals.fulldates import FullDate
+from sfinx.fintypes.temporals.fulldates import FullDate
 
 
 def test_full_date():

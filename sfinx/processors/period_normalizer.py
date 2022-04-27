@@ -1,4 +1,4 @@
-from src.fintypes.period import FinTabPeriod
+from sfinx.fintypes.period import FinTabPeriod
 
 
 class FinTabPeriodNormalizer:

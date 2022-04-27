@@ -1,7 +1,7 @@
 import re
-from src.fintypes.attributes.colors import FinTabColors
-from src.fintypes.attributes.styles import FinTabStyles
-from src.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.attributes.colors import FinTabColors
+from sfinx.fintypes.attributes.styles import FinTabStyles
+from sfinx.fintypes.attributes.valtypes import FinTabValTypes
 
 
 class FinTabCell:

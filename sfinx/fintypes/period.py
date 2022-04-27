@@ -1,11 +1,11 @@
 from enum import Enum
-from src.fintypes.attributes.valtypes import FinTabValTypes
-from src.fintypes.temporals.years import *
-from src.fintypes.temporals.semis import *
-from src.fintypes.temporals.quarters import *
-from src.fintypes.temporals.ending import *
-from src.fintypes.temporals.months import *
-from src.fintypes.temporals.fulldates import *
+from sfinx.fintypes.attributes.valtypes import FinTabValTypes
+from sfinx.fintypes.temporals.years import *
+from sfinx.fintypes.temporals.semis import *
+from sfinx.fintypes.temporals.quarters import *
+from sfinx.fintypes.temporals.ending import *
+from sfinx.fintypes.temporals.months import *
+from sfinx.fintypes.temporals.fulldates import *
 
 
 class FinTabPeriod:

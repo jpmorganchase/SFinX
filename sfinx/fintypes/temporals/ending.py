@@ -1,6 +1,6 @@
 import re
 from dateutil.relativedelta import relativedelta
-from src.fintypes.temporals.base import Temporal
+from sfinx.fintypes.temporals.base import Temporal
 
 
 class Ending(Temporal):

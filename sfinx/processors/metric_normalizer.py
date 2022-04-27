@@ -1,5 +1,5 @@
-from src.fintypes.attributes.amounts import FinTabAmount
-from src.fintypes.metric import FinTabMetric
+from sfinx.fintypes.attributes.amounts import FinTabAmount
+from sfinx.fintypes.metric import FinTabMetric
 
 
 class FinTabMetricNormalizer:

@@ -1,4 +1,4 @@
-from src.fintypes.temporals.quarters import *
+from sfinx.fintypes.temporals.quarters import *
 
 
 def test_quarter():

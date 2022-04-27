@@ -1,6 +1,6 @@
 from tests.globals import sample_table
-from src.fintypes.components.cell import FinTabCell
-from src.fintypes.attributes.currencies import FinTabCurrency
+from sfinx.fintypes.components.cell import FinTabCell
+from sfinx.fintypes.attributes.currencies import FinTabCurrency
 
 
 def test_scale():

@@ -1,5 +1,5 @@
 from tests.globals import sample_table
-from src.fintypes.components.cell import FinTabCell
+from sfinx.fintypes.components.cell import FinTabCell
 
 
 cell1 = FinTabCell(1, 3, sample_table["B4"], [])

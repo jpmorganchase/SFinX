@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.fintypes.temporals.base import Temporal
+from sfinx.fintypes.temporals.base import Temporal
 
 
 class Quarter(Temporal):
