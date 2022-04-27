@@ -7,7 +7,7 @@ class FullDate(Temporal):
     Represents a full date expression.
     """
     def __init__(self):
-        super().__init__(self.__name__)
+        super().__init__(self.__name__)  # pylint: disable=no-member
 
     @staticmethod
     def find(text):

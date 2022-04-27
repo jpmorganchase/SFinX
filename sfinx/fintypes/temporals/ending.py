@@ -67,7 +67,7 @@ class MonthsEnding(Ending):
     def __init__(self):
         super().__init__(Ending.MONTHS)
         self.add_regex(r"[0-9]+\s?(months|mos|mo\.s)")
-        self.add_regex("(" + '|'.join([num for num in self.NUM_MAP.keys()]) + ")\s?(months|mos|mo\.s)")
+        self.add_regex("(" + '|'.join([num for num in self.NUM_MAP.keys()]) + r")\s?(months|mos|mo\.s)")
 
 
 class DaysEnding(Ending):

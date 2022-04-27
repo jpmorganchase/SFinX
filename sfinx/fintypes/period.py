@@ -214,7 +214,7 @@ class FinTabDerivedPeriod:
         if not amount1.fit_for_deltas(): return None
         # Determine which period comes first.
         if period1 < period2: a1, p1, a2, p2 = amount1, period1, amount2, period2
-        else: a1, p1, a2, p2 = amount2, period2, amount1, period2
+        else: a1, p1, a2, p2 = amount2, period2, amount1, period2  # noqa: F841
         # Calculate the period-on-period span and create a new derived period object.
         return FinTabDerivedPeriod(p1.expr + ' to ' + p2.expr + ' delta [derived]',
                                    p1.start_date, p2.end_date,

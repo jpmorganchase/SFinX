@@ -47,7 +47,7 @@ def recursive_print_per_sheet(sheet_name, metric, map):
 
 def recursive_print(path):
     wb = FinWorkbook(path, from_path=True)
-    period_norm = FinTabPeriodNormalizer(wb)
+    period_norm = FinTabPeriodNormalizer(wb)  # noqa: F841
     metric_norm = FinTabMetricNormalizer(wb)
     for key, metric in metric_norm.sheet_to_metrics.items():
         recursive_print_per_sheet(key[0], metric.name, metric.name_to_sub_metric)
@@ -56,7 +56,7 @@ def recursive_print(path):
 
 def generate_output(input, extension, is_path):
     wb = FinWorkbook(input, from_path=is_path)
-    period_norm = FinTabPeriodNormalizer(wb)
+    period_norm = FinTabPeriodNormalizer(wb)  # noqa: F841
     metric_norm = FinTabMetricNormalizer(wb)
     j = metric_norm.to_json()
     if extension == '.tsv': j = FinTabMetricNormalizer.to_tsv(j)

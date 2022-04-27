@@ -81,7 +81,7 @@ class FinSheet:
                     # It downward propagation fails, then it attempts to propagate the headers rightward.
                     rightward_success = False
                     if not downward_success:
-                        rightward_success = self._propagate_headers_rightward(i, j)
+                        rightward_success = self._propagate_headers_rightward(i, j)  # noqa: F841
 
     def _set_cell_col_header(self, i, j):
         """
