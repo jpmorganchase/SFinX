@@ -10,10 +10,19 @@ The top segment of the table below provides two examples of such tabular data. T
 ![SFinX](sfinx.PNG)
 
 # Requirements
-`python 3.5` or higher.
+`python 3.7` or higher.
 
 # How to use
 1. `git clone <SFinX>`
 2. `cd <SFinX>`
-3. `pip3 install -r requirements.txt`
-4. `python3 src/main.py --input /path/to/input/file.xlsx --input-extension xlsx --output /path/to/output --output-extension [json/tsv]`
+3. Add the current directory to [PYTHONPATH](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
+   - Windows: `set PYTHONPATH=.`
+   - *nix/Mac:  `export PYTHONPATH=.`
+4. `pip install -r requirements.txt`
+5. `python sfinx/main.py --input /path/to/input/file.xlsx --output /path/to/output.[tsv|json]`
+
+The program expects Excel inputs and will output in either tsv or json format depending on the file extension
+used for the output file.
+
+There are some example input files within the project that you can run:
+ - `python sfinx/main.py --input examples/sfinx_example_1_input.xlsx --output output.json`
