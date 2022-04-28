@@ -1,0 +1,33 @@
+[flake8]
+max-line-length = 120
+ignore=
+    # prefer break after binary operator (Knuth style is to prefer break before op)
+    W503,
+    # Whitespace before ':'
+    E203,
+    # Too many leading '#' for block comment
+    E266,
+    # Line too long (120 &gt; 79 characters)
+    E501,
+    # Ambiguous variable name
+    E741
+
+select = C,E,F,W,B,B950
+
+exclude=
+    .git,
+    __pycache__,
+    *.ropeproject/*,
+    # django migrations
+    */migrations/*,
+    # django generated static files
+    *static/*,
+    # vendor imported code
+    *save_the_change/*,
+    .venv/*
+    .tox/*
+    .eggs/*
+    build/*
+
+
+max-complexity=10

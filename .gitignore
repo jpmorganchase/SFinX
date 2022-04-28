@@ -1,0 +1,6 @@
+**/__pycache__/*
+**/*.pyc
+*.idea
+Thumbs.db
+venv
+.venv

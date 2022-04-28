@@ -1,0 +1,5 @@
+openpyxl==3.0.5
+regex==2022.3.2
+dateparser==1.1.0
+pytest==6.2.5
+pytest-cov==3.0.0
